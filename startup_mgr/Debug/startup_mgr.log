@@ -1,0 +1,28 @@
+﻿Build started 2015/4/13 12:57:53.
+     1>Project "F:\startup_mgr\startup_mgr\startup_mgr.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt app_startupitem.cpp pefileinfo_helper.cpp regedit_key.cpp service_startupitem.cpp startup_mgr.cpp startupitem_mgr.cpp stdafx.cpp
+         app_startupitem.cpp
+         Generating Code...
+         Compiling...
+         stdafx.cpp
+         startupitem_mgr.cpp
+         startup_mgr.cpp
+         service_startupitem.cpp
+         regedit_key.cpp
+         pefileinfo_helper.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\startup_mgr\Debug\startup_mgr.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\startup_mgr\Debug\startup_mgr.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\startup_mgr\Debug\startup_mgr.lib" /MACHINE:X86 Debug\app_startupitem.obj
+         Debug\pefileinfo_helper.obj
+         Debug\regedit_key.obj
+         Debug\service_startupitem.obj
+         Debug\startupitem_mgr.obj
+         Debug\startup_mgr.obj
+         Debug\stdafx.obj
+         startup_mgr.vcxproj -> F:\startup_mgr\Debug\startup_mgr.exe
+     1>Done Building Project "F:\startup_mgr\startup_mgr\startup_mgr.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:11.95

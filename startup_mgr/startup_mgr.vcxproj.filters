@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{70826e98-3f19-4fca-a264-81148fe6b976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{b9a519f8-b53e-4172-a24d-669892a08ed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="startupitem">
+      <UniqueIdentifier>{cc5ab20d-24b2-497f-945a-08eef1f312a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{acf58cd5-e225-4b4d-be6e-be8c15b9712d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pefileinfo_helper.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="regedit_key.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>other</Filter>
+    </ClCompile>
+    <ClCompile Include="app_startupitem.cpp">
+      <Filter>startupitem</Filter>
+    </ClCompile>
+    <ClCompile Include="service_startupitem.cpp">
+      <Filter>startupitem</Filter>
+    </ClCompile>
+    <ClCompile Include="startupitem_mgr.cpp">
+      <Filter>startupitem</Filter>
+    </ClCompile>
+    <ClCompile Include="startup_mgr.cpp">
+      <Filter>other</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pefileinfo_helper.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="regedit_key.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>other</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>other</Filter>
+    </ClInclude>
+    <ClInclude Include="app_startupitem.h">
+      <Filter>startupitem</Filter>
+    </ClInclude>
+    <ClInclude Include="service_startupitem.h">
+      <Filter>startupitem</Filter>
+    </ClInclude>
+    <ClInclude Include="startupitem_mgr.h">
+      <Filter>startupitem</Filter>
+    </ClInclude>
+    <ClInclude Include="istartupitem.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
