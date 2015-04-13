@@ -21,21 +21,25 @@
 
 struct RegKeyValue
 {
-	std::wstring strName;
-	DWORD dwKeyType;
-	std::wstring dwKeyValue;
-	RegKeyValue(){}
+    std::wstring strName;
+    DWORD dwKeyType;
+    PBYTE pKeyValue;
+    RegKeyValue(){}
 
-	RegKeyValue(TCHAR* strTempName,
-		DWORD dwTempKeyType, TCHAR* dwTempKeyValue
-		) :strName(strTempName), dwKeyType(dwTempKeyType),
-		dwKeyValue(dwTempKeyValue){}
+    RegKeyValue(TCHAR* strTempName,
+        DWORD dwTempKeyType, PBYTE pTempKeyValue
+        ) :strName(strTempName), dwKeyType(dwTempKeyType),
+        pKeyValue(pTempKeyValue){}
 };
 
 struct RegKey
 {
-	std::wstring strName;
-	HKEY hMainKey;
+    std::wstring strName;
+    HKEY hMainKey;
+    RegKey(){}
+    RegKey(TCHAR* strTemp, HKEY hKey) :
+        strName(strTemp), hMainKey(hKey)
+    {}
 };
 
 
