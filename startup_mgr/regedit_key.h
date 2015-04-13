@@ -13,7 +13,7 @@ public:
     BOOL InsertValue(RegKeyValue& regKeyValue, DWORD dwKeyValueSize);
     BOOL DeleteValue(LPCTSTR lpValueName);
     BOOL QueryValue(std::vector<const RegKeyValue* >& regKeyValueVec);
-    BOOL GetSubRegKey(std::vector<RegKey* > regKeyVec);
+    BOOL GetSubRegKey(std::vector<RegKey* >& regKeyVec);
 
 private:
     BOOL _EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount);

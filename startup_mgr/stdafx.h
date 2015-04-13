@@ -12,6 +12,7 @@
 #include <windows.h>
 #include <vector>
 #include <iostream>
+#include <string>
 #include <Shlwapi.h>
 
 #pragma comment(lib,"shlwapi.lib")

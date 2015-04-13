@@ -20,7 +20,7 @@ BOOL CRegeditKey::Init(HKEY hMainKey, LPCTSTR lpValueName)
 
     LONG lReturnValue = ::RegCreateKeyEx(
         hMainKey, lpValueName, 0L, NULL,
-        REG_OPTION_VOLATILE, KEY_ALL_ACCESS,
+        REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS,
         NULL, &m_hKey, &dwOpenOrCreate);
 
     if (lReturnValue == ERROR_SUCCESS)
@@ -71,7 +71,7 @@ BOOL CRegeditKey::_EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount
     {
         dwValueSize = dwMaxValueLen;
         memset(pValueData, 0, dwMaxValueLen);
-        RegEnumValue(m_hKey, dwIndex, tcValueName, &dwValueNameSize,
+        ::RegEnumValue(m_hKey, dwIndex, tcValueName, &dwValueNameSize,
             NULL, &dwValueType, pValueData, &dwValueSize);
 
         dwValueNameSize = 128;
@@ -82,15 +82,18 @@ BOOL CRegeditKey::_EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount
     {
         delete[]pValueData;
     }
+    return TRUE;
 }
 
 BOOL CRegeditKey::InsertValue(RegKeyValue& regKeyValue, DWORD dwKeyValueSize)
 {
-    LONG lReturnValue = RegSetValueEx(m_hKey, 
+    LONG lReturnValue = ::RegSetValueEx(m_hKey, 
                     regKeyValue.strName.c_str(), 
                     0, regKeyValue.dwKeyType, 
                     regKeyValue.pKeyValue, 
                     dwKeyValueSize);
+
+    std::cout << lReturnValue <<" "<<dwKeyValueSize<< std::endl;
 
     if (ERROR_SUCCESS == lReturnValue)
     {
@@ -109,7 +112,7 @@ BOOL CRegeditKey::DeleteValue(LPCTSTR lpValueName)
         return FALSE;
     }
 
-    RegDeleteValue(m_hKey, lpValueName);
+    ::RegDeleteValue(m_hKey, lpValueName);
 
     return TRUE;
 }
@@ -131,7 +134,7 @@ BOOL CRegeditKey::QueryValue(std::vector<const RegKeyValue* >& regKeyValue)
     return TRUE;
 }
 
-BOOL CRegeditKey::GetSubRegKey(std::vector<RegKey* > regKeyVec)
+BOOL CRegeditKey::GetSubRegKey(std::vector<RegKey* >& regKeyVec)
 {
     DWORD dwSubKeyCount;
 
@@ -141,9 +144,10 @@ BOOL CRegeditKey::GetSubRegKey(std::vector<RegKey* > regKeyVec)
 
     TCHAR tcKeyName[128] = { 0 };
     DWORD dwKeyNameSize = 128;
+
     for (DWORD dwIndex = 0; dwIndex < dwSubKeyCount; dwIndex++)
     {
-        RegEnumKeyEx(m_hKey, dwIndex, 
+        ::RegEnumKeyEx(m_hKey, dwIndex, 
                 tcKeyName, &dwKeyNameSize, 
                 NULL, NULL, NULL, NULL);
         regKeyVec.push_back(new RegKey(tcKeyName, m_hKey));
