@@ -14,9 +14,9 @@
 #include <iostream>
 #include <string>
 #include <Shlwapi.h>
+#include <map>
 
 #pragma comment(lib,"shlwapi.lib")
-
 
 #define DELETE_CURRENT_KEY 1
 
@@ -46,34 +46,26 @@ struct RegKey
 
 struct ResultData
 {
-	std::wstring strAppName;
-	std::wstring strCompanyName;
-	SYSTEMTIME systemTime;
-	std::wstring strKeyName;
+    DWORD itemType;
+    std::wstring strPeFilePath;
+    void* test;
+    ResultData(){}
+    ResultData(DWORD dwType, void* test, TCHAR* strTemp) : 
+        itemType(dwType), test(test), strPeFilePath(strTemp)
+    {}
+};
 
-	ResultData()
-	{
-		strAppName = L"";
-		strCompanyName = L"";
-		strKeyName = L"";
-	}
+struct ItemDisData
+{
+    std::wstring strAppName;
+    std::wstring strCompanyName;
+    SYSTEMTIME systemTime;
+    ItemDisData(){}
 };
 
 struct MyRegData
 {
-	std::wstring strKeyName;
-	DWORD dwKeyType;
-	std::wstring strKeyValue;
-	HKEY hMainKey;
-	std::wstring strKeyPath;
-	DWORD startType;
 
-	MyRegData(){}
-
-	MyRegData(std::wstring strTempName,
-		DWORD dwTempKeyType, std::wstring strTempKeyValue
-		) :strKeyName(strTempName), dwKeyType(dwTempKeyType),
-		strKeyValue(strTempKeyValue){}
 };
 
 

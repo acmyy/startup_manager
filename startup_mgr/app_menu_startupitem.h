@@ -1,10 +1,10 @@
 #pragma once
 #include "istartupitem.h"
-class CServiceStartupItem : public IStartupItem
+class CAppMenuStartupItem : public IStartupItem
 {
 public:
-    CServiceStartupItem(void);
-    ~CServiceStartupItem(void);
+    CAppMenuStartupItem(void);
+    ~CAppMenuStartupItem(void);
     BOOL Init();
     BOOL UnInit();
 
