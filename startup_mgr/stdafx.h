@@ -20,18 +20,10 @@
 
 #define DELETE_CURRENT_KEY 1
 
-struct RegKeyValue
-{
-    std::wstring strName;
-    DWORD dwKeyType;
-    PBYTE pKeyValue;
-    RegKeyValue(){}
 
-    RegKeyValue(TCHAR* strTempName,
-        DWORD dwTempKeyType, PBYTE pTempKeyValue
-        ) :strName(strTempName), dwKeyType(dwTempKeyType),
-        pKeyValue(pTempKeyValue){}
-};
+#define APP_REG_ITEM 1
+#define APP_MENU_ITEM 2
+#define SERVICE_REG_ITEM 3
 
 struct RegKey
 {
@@ -41,6 +33,29 @@ struct RegKey
     RegKey(TCHAR* strTemp, HKEY hKey) :
         strName(strTemp), hMainKey(hKey)
     {}
+};
+
+
+struct RegKeyValue
+{
+    std::wstring strName;
+    DWORD dwKeyType;
+    DWORD dwValueSize;
+    PBYTE pKeyValue;
+    RegKey regKeyInfo;
+    RegKeyValue(){}
+
+    RegKeyValue(TCHAR* strTempName, DWORD dwTempKeyType,
+            PBYTE pTempKeyValue, DWORD dwTempValueSize) : strName(strTempName), 
+            dwKeyType(dwTempKeyType), dwValueSize(dwTempValueSize)
+    {
+        //pKeyValue = pTempKeyValue;
+        pKeyValue = new BYTE[dwTempValueSize];
+        for (DWORD dwIndex = 0; dwIndex < dwValueSize; dwIndex++)
+        {
+            pKeyValue[dwIndex] = pTempKeyValue[dwIndex];
+        }
+    }
 };
 
 
@@ -55,19 +70,23 @@ struct ResultData
     {}
 };
 
-struct ItemDisData
+struct PEFileInfoData
 {
     std::wstring strAppName;
     std::wstring strCompanyName;
     SYSTEMTIME systemTime;
-    ItemDisData(){}
+    PEFileInfoData(){}
 };
 
-struct MyRegData
+struct AppRegItemData
 {
-
+    std::wstring strName;
+    HKEY hMainKey;
+    AppRegItemData(){}
+    AppRegItemData(TCHAR* strTemp, HKEY hKey) :
+        strName(strTemp), hMainKey(hKey)
+    {}
 };
-
 
 
 // TODO: 在此处引用程序需要的其他头文件

@@ -33,9 +33,9 @@ BOOL CPEFileInfoHelper::InitInterFace()
     PEGetFileVersionInfoSize = (pfnGetFileVersionInfoSize)GetProcAddress(
         m_hVersionMod, "GetFileVersionInfoSizeW");
     PEGetFileVersionInfo = (pfnGetFileVersionInfo)GetProcAddress(\
-        m_hVersionMod, "GetFileVersionInfo");
+        m_hVersionMod, "GetFileVersionInfoW");
     PEVerQueryValue = (pfnVerQueryValue)GetProcAddress(
-        m_hVersionMod, "VerQueryValue");
+        m_hVersionMod, "VerQueryValueW");
 
     if (!PEGetFileVersionInfoSize ||
         !PEGetFileVersionInfo ||
@@ -49,7 +49,7 @@ BOOL CPEFileInfoHelper::InitInterFace()
     return TRUE;
 }
 
-DWORD CPEFileInfoHelper::GetPEFileInfo(TCHAR* lptPath, PEFILEVERSION_INFO& peInfo)
+DWORD CPEFileInfoHelper::GetPEFileInfo(const WCHAR* lptPath, PEFILEVERSION_INFO& peInfo)
 {
     if (m_hVersionMod == 0)
     {
@@ -58,7 +58,7 @@ DWORD CPEFileInfoHelper::GetPEFileInfo(TCHAR* lptPath, PEFILEVERSION_INFO& peInf
 
     DWORD dwHandle = 0;
     DWORD dwInfoSize = 0;
-    TCHAR* lpVersionInfoBuffer = NULL;
+    WCHAR* lpVersionInfoBuffer = NULL;
 
 
     dwInfoSize = PEGetFileVersionInfoSize(lptPath, &dwHandle);
@@ -69,7 +69,7 @@ DWORD CPEFileInfoHelper::GetPEFileInfo(TCHAR* lptPath, PEFILEVERSION_INFO& peInf
         return READ_ERROR;
     }
 
-    lpVersionInfoBuffer = new TCHAR[dwInfoSize];
+    lpVersionInfoBuffer = new WCHAR[dwInfoSize];
 
 
     if (!lpVersionInfoBuffer)
@@ -98,9 +98,9 @@ DWORD CPEFileInfoHelper::GetPEFileInfo(TCHAR* lptPath, PEFILEVERSION_INFO& peInf
     }
 
 
-    TCHAR *lpBuffer = 0;
+    WCHAR *lpBuffer = 0;
     UINT cbSizeBuf = 0;
-    TCHAR szSubBlock[50];
+    WCHAR szSubBlock[50];
     PEFILEVERSION_INFO_IT it;
     std::wstring szPerfix = _T("\\StringFileInfo\\%04x%04x\\");
 

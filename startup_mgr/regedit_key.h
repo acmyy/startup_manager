@@ -10,17 +10,16 @@ public:
     BOOL UnInit(DWORD dwOperatorType = 0);
 
 public:
-    BOOL InsertValue(RegKeyValue& regKeyValue, DWORD dwKeyValueSize);
+    BOOL InsertValue(RegKeyValue& regKeyValue);
     BOOL DeleteValue(LPCTSTR lpValueName);
-    BOOL QueryValue(std::vector<const RegKeyValue* >& regKeyValueVec);
+    BOOL QueryValue(std::vector<RegKeyValue* >& regKeyValueVec);
     BOOL GetSubRegKey(std::vector<RegKey* >& regKeyVec);
 
 private:
-    BOOL _EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount);
+    RegKeyValue* _EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount);
 
 private:
     HKEY m_hKey;
-    std::vector<RegKeyValue* > m_regKeyValueVec;
 };
 #endif
 

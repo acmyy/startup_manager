@@ -4,20 +4,17 @@
 
 CRegeditKey::CRegeditKey(void) : m_hKey(NULL)
 {
-    m_regKeyValueVec.clear();
 }
 
 
 CRegeditKey::~CRegeditKey(void)
 {
-
 }
 
 
 BOOL CRegeditKey::Init(HKEY hMainKey, LPCTSTR lpValueName)
 {
     DWORD dwOpenOrCreate = 0;
-
     LONG lReturnValue = ::RegCreateKeyEx(
         hMainKey, lpValueName, 0L, NULL,
         REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS,
@@ -25,14 +22,7 @@ BOOL CRegeditKey::Init(HKEY hMainKey, LPCTSTR lpValueName)
 
     if (lReturnValue == ERROR_SUCCESS)
     {
-        DWORD dwSubKeyValueCount = 0;
-        DWORD dwMaxValueLen = 0;
-
-        ::RegQueryInfoKey(m_hKey, NULL, NULL, NULL, NULL,
-            NULL, NULL, &dwSubKeyValueCount, NULL,
-            &dwMaxValueLen, NULL, NULL);
-
-        return _EnumRegKeyValue(dwMaxValueLen, dwSubKeyValueCount);
+        return TRUE;
     }
     else
     {
@@ -42,12 +32,12 @@ BOOL CRegeditKey::Init(HKEY hMainKey, LPCTSTR lpValueName)
 
 BOOL CRegeditKey::UnInit(DWORD dwOperatorType)
 {
-    std::vector<RegKeyValue * >::iterator it;
+    /*std::vector<RegKeyValue * >::iterator it;
 
     for (it = m_regKeyValueVec.begin(); it != m_regKeyValueVec.end(); it++)
     {
         delete *it;
-    }
+    }*/
 
     if (DELETE_CURRENT_KEY == dwOperatorType)
     {
@@ -59,7 +49,7 @@ BOOL CRegeditKey::UnInit(DWORD dwOperatorType)
     return TRUE;
 }
 
-BOOL CRegeditKey::_EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount)
+RegKeyValue* CRegeditKey::_EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount)
 {
     TCHAR tcValueName[1024] = { 0 };
     DWORD dwValueNameSize = 128;
@@ -75,25 +65,24 @@ BOOL CRegeditKey::_EnumRegKeyValue(DWORD dwMaxValueLen, DWORD dwSubKeyValueCount
             NULL, &dwValueType, pValueData, &dwValueSize);
 
         dwValueNameSize = 128;
-        m_regKeyValueVec.push_back(new RegKeyValue(tcValueName, dwValueType, pValueData));
+        return new RegKeyValue(
+            tcValueName, dwValueType, pValueData, dwValueSize);
     }
 
     if (pValueData != NULL)
     {
         delete[]pValueData;
     }
-    return TRUE;
+    return NULL;
 }
 
-BOOL CRegeditKey::InsertValue(RegKeyValue& regKeyValue, DWORD dwKeyValueSize)
+BOOL CRegeditKey::InsertValue(RegKeyValue& regKeyValue)
 {
     LONG lReturnValue = ::RegSetValueEx(m_hKey, 
                     regKeyValue.strName.c_str(), 
                     0, regKeyValue.dwKeyType, 
                     regKeyValue.pKeyValue, 
-                    dwKeyValueSize);
-
-    std::cout << lReturnValue <<" "<<dwKeyValueSize<< std::endl;
+                    regKeyValue.dwValueSize);
 
     if (ERROR_SUCCESS == lReturnValue)
     {
@@ -117,19 +106,28 @@ BOOL CRegeditKey::DeleteValue(LPCTSTR lpValueName)
     return TRUE;
 }
 
-BOOL CRegeditKey::QueryValue(std::vector<const RegKeyValue* >& regKeyValue)
+BOOL CRegeditKey::QueryValue(std::vector<RegKeyValue* >& regKeyValue)
 {
-    if (&regKeyValue == NULL)
+    DWORD dwSubKeyValueCount = 0;
+    DWORD dwMaxValueLen = 0;
+
+    ::RegQueryInfoKey(m_hKey, NULL, NULL, NULL, NULL,
+        NULL, NULL, &dwSubKeyValueCount, NULL,
+        &dwMaxValueLen, NULL, NULL);
+
+    if (!_EnumRegKeyValue(dwMaxValueLen, dwSubKeyValueCount))
     {
         return FALSE;
     }
-
+    /**********************
     std::vector<RegKeyValue* >::const_iterator it;
-
     for (it = m_regKeyValueVec.begin(); it != m_regKeyValueVec.end(); it++)
     {
-        regKeyValue.push_back(*it);
+        regKeyValue.push_back(*it);//new RegKeyValue(
+            //(*it)->strName.c_str(), (*it)->dwKeyType, 
+            //(*it)->pKeyValue, (*it)->dwValueSize));
     }
+    *********************/
 
     return TRUE;
 }

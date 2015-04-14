@@ -7,9 +7,9 @@
 #define READ_INVALID_INIT 0x02//错误的初始化导致的，失败
 #define READ_HEAP_REEO    0x03//内部的new操作挂掉导致的
 
-#define CompanyName         "CompanyName"
+#define CompanyName         _T("CompanyName")
 #define FileDescription     "FileDescription"
-#define ProductName         "ProductName"
+#define ProductName         _T("ProductName")
 #define ProductVersion      "ProductVersion"
 
 typedef DWORD(__stdcall*pfnGetFileVersionInfoSize)(LPCTSTR, LPDWORD);
@@ -33,7 +33,7 @@ public:
     ~CPEFileInfoHelper(void);
 
 public:
-    DWORD GetPEFileInfo(TCHAR* lptPath, PEFILEVERSION_INFO& peInfo);
+    DWORD GetPEFileInfo(const WCHAR* lptPath, PEFILEVERSION_INFO& peInfo);
 
 protected:
     BOOL InitInterFace();
